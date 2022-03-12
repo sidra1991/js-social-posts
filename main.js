@@ -74,12 +74,11 @@ Milestone 1 - Prendendo come riferimento il layout di esempio presente nell'html
 */
 
 const post = document.createElement(`div`);
-post.classList.add("post")
+post.classList.add("post");
 
 for (let i = 0; i < posts.length; i++) {
     let autorImmage = ``;
     let vuoto = '';
-
     if (posts[i].author.image === null ) {
        autorImmage = `<span> ${posts[i].author.name[0]} </span> `;
        vuoto = "profile-pic-default" 
@@ -89,50 +88,68 @@ for (let i = 0; i < posts.length; i++) {
 
     post.innerHTML +=
         `
-    <div class="post__header">
-        <div class="post-meta">                    
-                <div class="post-meta__icon ${vuoto}">
-                ${autorImmage}                 
+    <div data-id="${posts[i].id}">    
+        <div class="post__header">
+            <div class="post-meta">                    
+                    <div class="post-meta__icon ${vuoto}">
+                    ${autorImmage}                 
+                </div>
+                <div class="post-meta__data">
+                    <div class="post-meta__author">${posts[i].author.name}</div>
+                    <div class="post-meta__time">${posts[i].created}</div>
+                </div>                    
             </div>
-            <div class="post-meta__data">
-                <div class="post-meta__author">${posts[i].author.name}</div>
-                <div class="post-meta__time">${posts[i].created}</div>
-            </div>                    
         </div>
-    </div>
-    <div class="post__text">${posts[i].content}</div>
-    <div class="post__image">
-        <img src=${posts[i].media} alt="">
-        
-    </div>
-    <div class="post__footer">
-        <div class="likes js-likes">
-            <div class="likes__cta">
-                <a class="like-button  js-like-button" href="#" data-postid="1"  onclick=getLike() id="${posts[i].id} >
-                    <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true" ></i>
-                    <span class="like-button__label">Mi Piace</span>
-                </a>
-            </div>
-            <div class="likes__counter">
-                Piace a <b id="like-counter-1" class="js-likes-counter">${posts[i].likes}</b> persone
-            </div>
+        <div class="post__text">${posts[i].content}</div>
+        <div class="post__image">
+            <img src=${posts[i].media} alt="">
+            
+        </div>
+        <div class="post__footer">
+            <div class="likes js-likes">
+                <div class="likes__cta">
+                    <a class="like-button  js-like-button" href="#" data-postid="1"  onclick=getLike() id="${posts[i].id} >
+                        <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true" ></i>
+                        <span class="like-button__label">Mi Piace</span>
+                    </a>
+                </div>
+                <div class="likes__counter">
+                    Piace a <b id="like-counter-1" class="js-likes-counter">${posts[i].likes}</b> persone
+                </div>
+            </div> 
         </div> 
-    </div>            
+    </div>               
 `;
+
+
+
 
     document.getElementById(`container`).append(post)
 
 };
 
+function getLike() {
+    event.preventDefault()
+    const button = post.querySelector(`.js-like-button`);
+    const span = post.querySelector(`.js-likes-counter`);
+    
+
+    if (button.classList.contains(`like-button--liked`)) {
+        button.classList.remove(`like-button--liked`)
+        span.innerHTML= `${base}`
+    }else{
+        button.classList.add(`like-button--liked`)
+        span.innerHTML= `${conto}`
+    }
+
+    console.log()
+}
 /*
 Milestone 2 - Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone e incrementiamo il counter dei likes relativo.
 Salviamo in un secondo ar
 */
+const likes = []
 
-function getLike() {
-    document.querySelectorAll(button).classList.add(`.like-button--liked`)
-    
-}
 
 
 /*
